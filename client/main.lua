@@ -1,3 +1,5 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
 local config = require 'config.client'
 
 local currentGear = {
@@ -18,9 +20,9 @@ local function disableScuba()
     SetPedMaxTimeUnderwater(cache.ped, 1.00)
 end
 
-lib.callback.register('qbx_divegear:client:fillTank', function()
+lib.callback.register('popcornrp-divegear:client:fillTank', function()
     if IsPedSwimmingUnderWater(cache.ped) then
-        exports.qbx_core:Notify(Lang:t('error.underwater', {oxygenlevel = oxygenLevel}), 'error')
+        qBCore.Functions.Notify(Lang:t('error.underwater', {oxygenlevel = oxygenLevel}), 'error')
         return false
     end
 
@@ -37,7 +39,7 @@ lib.callback.register('qbx_divegear:client:fillTank', function()
     }) then
 
         oxygenLevel = config.startingOxygenLevel
-        exports.qbx_core:Notify(Lang:t('success.tube_filled'), 'success')
+        qBCore.Functions.Notify(Lang:t('success.tube_filled'), 'success')
         if currentGear.enabled then
             enableScuba()
         end
@@ -90,7 +92,7 @@ local function takeOffSuit()
         SetPedMaxTimeUnderwater(cache.ped, 50.00)
         currentGear.enabled = false
         deleteGear()
-        exports.qbx_core:Notify(Lang:t('success.took_out'))
+        qBCore.Functions.Notify(Lang:t('success.took_out'))
         TriggerServerEvent('InteractSound_SV:PlayOnSource', nil, 0.25)
     end
 end
@@ -126,12 +128,12 @@ end
 
 local function putOnSuit()
     if oxygenLevel <= 0 then
-        exports.qbx_core:Notify(Lang:t('error.need_otube'), 'error')
+        qBCore.Functions.Notify(Lang:t('error.need_otube'), 'error')
         return
     end
 
     if IsPedSwimming(cache.ped) or cache.vehicle then
-        exports.qbx_core:Notify(Lang:t('error.not_standing_up'), 'error')
+        qBCore.Functions.Notify(Lang:t('error.not_standing_up'), 'error')
         return
     end
 
@@ -156,7 +158,7 @@ local function putOnSuit()
     end
 end
 
-RegisterNetEvent('qbx_divegear:client:useGear', function()
+RegisterNetEvent('popcornrp-divegear:client:useGear', function()
     if currentGear.enabled then
         takeOffSuit()
     else

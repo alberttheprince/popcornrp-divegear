@@ -46,5 +46,5 @@ Place these items in ox_inventory's item.lua if you don't have them already:
 
 Missing images for your items? Here are some free-to-use images!
 
-![diving_gear](https://github.com/Qbox-project/qbx_divegear/assets/85725579/739d847c-1b49-4c20-9578-6e5ec8eac179)
-![diving_fill](https://github.com/Qbox-project/qbx_divegear/assets/85725579/62c9057d-9412-4256-aab4-59cfe015e90b)
+![diving_gear](https://github.com/Qbox-project/popcornrp-divegear/assets/85725579/739d847c-1b49-4c20-9578-6e5ec8eac179)
+![diving_fill](https://github.com/Qbox-project/popcornrp-divegear/assets/85725579/62c9057d-9412-4256-aab4-59cfe015e90b)
