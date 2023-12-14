@@ -22,7 +22,7 @@ end
 
 lib.callback.register('popcornrp-divegear:client:fillTank', function()
     if IsPedSwimmingUnderWater(cache.ped) then
-        qBCore.Functions.Notify(Lang:t('error.underwater', {oxygenlevel = oxygenLevel}), 'error')
+        QBCore.Functions.Notify(Lang:t('error.underwater', {oxygenlevel = oxygenLevel}), 'error')
         return false
     end
 
@@ -39,7 +39,7 @@ lib.callback.register('popcornrp-divegear:client:fillTank', function()
     }) then
 
         oxygenLevel = config.startingOxygenLevel
-        qBCore.Functions.Notify(Lang:t('success.tube_filled'), 'success')
+        QBCore.Functions.Notify(Lang:t('success.tube_filled'), 'success')
         if currentGear.enabled then
             enableScuba()
         end
@@ -92,7 +92,7 @@ local function takeOffSuit()
         SetPedMaxTimeUnderwater(cache.ped, 50.00)
         currentGear.enabled = false
         deleteGear()
-        qBCore.Functions.Notify(Lang:t('success.took_out'))
+        QBCore.Functions.Notify(Lang:t('success.took_out'))
         TriggerServerEvent('InteractSound_SV:PlayOnSource', nil, 0.25)
     end
 end
@@ -128,12 +128,12 @@ end
 
 local function putOnSuit()
     if oxygenLevel <= 0 then
-        qBCore.Functions.Notify(Lang:t('error.need_otube'), 'error')
+        QBCore.Functions.Notify(Lang:t('error.need_otube'), 'error')
         return
     end
 
     if IsPedSwimming(cache.ped) or cache.vehicle then
-        qBCore.Functions.Notify(Lang:t('error.not_standing_up'), 'error')
+        QBCore.Functions.Notify(Lang:t('error.not_standing_up'), 'error')
         return
     end
 
