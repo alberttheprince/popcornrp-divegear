@@ -4,9 +4,8 @@
 
 # popcornrp-divegear
 
-A QBCore conversion of the qbox diving resource that enables the functionality of diving and air tank items. 
+A QBCore conversion of the QBox diving resource that enables the functionality of diving and air tank items. 
 
-Works with [popcornrp-diving](WIP), a coral diving and collection resource, also developed by the Qbox community!
 
 # Dependencies
 - QBCore
