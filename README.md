@@ -17,7 +17,7 @@ A QBCore conversion of the QBox diving resource that enables the functionality o
 - Able to set the length of time an air tank will refill your tank
 - Limitations for refilling underwater (to limit endless use of air tanks)
 - animations and timers during refill
-- Text that displays current air time at the bottom of the player's screen when underwater and wearing gear
+- Text that displays current air time at the top of the player's screen when underwater and wearing gear
 
 # ox_inventory items
 
