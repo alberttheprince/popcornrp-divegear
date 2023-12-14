@@ -5,7 +5,7 @@
 
 A QBCore conversion of the qbox diving resource that enables the functionality of diving and air tank items. 
 
-Works with [popcornrp-diving](TBA), a coral diving and collection resource, also developed by the Qbox community!
+Works with [popcornrp-diving](WIP), a coral diving and collection resource, also developed by the Qbox community!
 
 # Dependencies
 - QBCore

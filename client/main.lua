@@ -1,7 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local config = require 'config.client'
-
 local currentGear = {
     mask = 0,
     tank = 0,
@@ -22,12 +20,12 @@ end
 
 lib.callback.register('popcornrp-divegear:client:fillTank', function()
     if IsPedSwimmingUnderWater(cache.ped) then
-        QBCore.Functions.Notify(Lang:t('error.underwater', {oxygenlevel = oxygenLevel}), 'error')
+         QBCore.Functions.Notify(Lang:t('error.underwater', {oxygenlevel = oxygenLevel}), 'error')
         return false
     end
 
     if lib.progressBar({
-        duration = config.RefillTankTimeMs,
+        duration = Config.refillTankTimeMs,
         label = Lang:t('info.filling_air'),
         useWhileDead = false,
         canCancel = true,
@@ -38,8 +36,8 @@ lib.callback.register('popcornrp-divegear:client:fillTank', function()
         }
     }) then
 
-        oxygenLevel = config.startingOxygenLevel
-        QBCore.Functions.Notify(Lang:t('success.tube_filled'), 'success')
+        oxygenLevel = Config.startingOxygenLevel
+         QBCore.Functions.Notify(Lang:t('success.tube_filled'), 'success')
         if currentGear.enabled then
             enableScuba()
         end
@@ -78,7 +76,7 @@ end
 
 local function takeOffSuit()
     if lib.progressBar({
-        duration = config.TakeOffSuitTimeMs,
+        duration = Config.takeOffSuitTimeMs,
         label = Lang:t('info.pullout_suit'),
         useWhileDead = false,
         canCancel = true,
@@ -92,8 +90,7 @@ local function takeOffSuit()
         SetPedMaxTimeUnderwater(cache.ped, 50.00)
         currentGear.enabled = false
         deleteGear()
-        QBCore.Functions.Notify(Lang:t('success.took_out'))
-        TriggerServerEvent('InteractSound_SV:PlayOnSource', nil, 0.25)
+         QBCore.Functions.Notify(Lang:t('success.took_out'))
     end
 end
 
@@ -101,7 +98,12 @@ local function startOxygenLevelDrawTextThread()
     CreateThread(function()
         while currentGear.enabled do
             if IsPedSwimmingUnderWater(cache.ped) then
-                DrawText2D(oxygenLevel..'⏱', vec2(1.0, 1.42), 1.0, 1.0, 0.45, 4)
+                lib.showTextUI(oxygenLevel..'⏱', {
+                    position = "top-center",
+                })
+            end
+            if not IsPedSwimmingUnderWater(cache.ped) then
+                lib.hideTextUI()
             end
             Wait(0)
         end
@@ -113,12 +115,12 @@ local function startOxygenLevelDecrementerThread()
         while currentGear.enabled do
             if IsPedSwimmingUnderWater(cache.ped) and oxygenLevel > 0 then
                 oxygenLevel -= 1
-                if oxygenLevel % 10 == 0 and oxygenLevel ~= config.startingOxygenLevel then
-                    TriggerServerEvent('InteractSound_SV:PlayOnSource', 'breathdivingsuit', 0.25)
+                if oxygenLevel == 30 then
+                    QBCore.Functions.Notify('You have 30 seconds of oxygen left!', 'error')
                 end
                 if oxygenLevel == 0 then
                     disableScuba()
-                    TriggerServerEvent('InteractSound_SV:PlayOnSource', nil, 0.25)
+                    QBCore.Functions.Notify('You ran out of Oxygen! Get to the surface now!', 'error')
                 end
             end
             Wait(1000)
@@ -128,17 +130,17 @@ end
 
 local function putOnSuit()
     if oxygenLevel <= 0 then
-        QBCore.Functions.Notify(Lang:t('error.need_otube'), 'error')
+         QBCore.Functions.Notify(Lang:t('error.need_otube'), 'error')
         return
     end
 
     if IsPedSwimming(cache.ped) or cache.vehicle then
-        QBCore.Functions.Notify(Lang:t('error.not_standing_up'), 'error')
+         QBCore.Functions.Notify(Lang:t('error.not_standing_up'), 'error')
         return
     end
 
     if lib.progressBar({
-        duration = config.PutOnSuitTimeMs,
+        duration = Config.putOnSuitTimeMs,
         label = Lang:t('info.put_suit'),
         useWhileDead = false,
         canCancel = true,
@@ -152,7 +154,6 @@ local function putOnSuit()
         attachGear()
         enableScuba()
         currentGear.enabled = true
-        TriggerServerEvent('InteractSound_SV:PlayOnSource', 'breathdivingsuit', 0.25)
         startOxygenLevelDecrementerThread()
         startOxygenLevelDrawTextThread()
     end
