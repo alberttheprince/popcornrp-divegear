@@ -1,4 +1,5 @@
-![image](https://github.com/alberttheprince/popcornrp-divegear/assets/85725579/14888a73-61a3-487f-bc0c-b53007c39c03)
+![image](https://github.com/alberttheprince/popcornrp-divegear/assets/85725579/8fe625ff-f02f-4d7b-8a63-15d463df893f)
+
 
 
 # popcornrp-divegear
